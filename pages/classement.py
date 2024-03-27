@@ -1,13 +1,15 @@
 import flet as ft
 import backend
+from pages.connexion import USER_EMAIL
+
 player = ""
 points = 0
 rang = 0
 
 
-class DemoApp(ft.UserControl):
+class CLassementGeneral(ft.UserControl):
     def __init__(self, page):
-        super(DemoApp, self).__init__()
+        super(CLassementGeneral, self).__init__()
         self.page = page
         self.classement_table = ft.DataTable(
             columns=[
@@ -24,14 +26,13 @@ class DemoApp(ft.UserControl):
         )
         self.list_name = ft.Dropdown(
             dense=True, height=40, width=130,
-            label="liste",
-            label_style=ft.TextStyle(size=12, font_family="Poppins Medium", color="black"),
+            border="underline",
             text_style=ft.TextStyle(size=12, font_family="Poppins Medium", color="black"),
             content_padding=12,
             on_change=self.on_change_list
         )
         self.list_number = ft.Text(visible=False)
-        self.all = ft.IconButton(ft.icons.ARROW_CIRCLE_LEFT, on_click=self.back)
+        self.all = ft.ElevatedButton(on_click=self.back)
         self.infos = ft.Text("", size=11, color="grey", font_family="Poppins Regular")
         self.fill_table()
         self.load_options()
@@ -60,7 +61,7 @@ class DemoApp(ft.UserControl):
                     ft.DataRow(
                         cells=[
                             ft.DataCell(ft.Text(data['rang'], size=12, font_family="Poppins Medium")),
-                            ft.DataCell(ft.Icon(ft.icons.ARROW_CIRCLE_UP, color=ft.colors.GREEN_500, size=24)),
+                            ft.DataCell(ft.Icon(ft.icons.KEYBOARD_ARROW_UP, color=ft.colors.GREEN_500, size=24)),
                             ft.DataCell(ft.Text(data['player'].upper(), size=12, font_family="Poppins Medium")),
                             ft.DataCell(ft.Text(data['points'], size=12, font_family="Poppins Medium")),
                         ], on_select_changed=lambda e: self.select_player(e.control.cells[2].content.value,
@@ -73,7 +74,7 @@ class DemoApp(ft.UserControl):
                     ft.DataRow(
                         cells=[
                             ft.DataCell(ft.Text(data['rang'], size=12, font_family="Poppins Medium")),
-                            ft.DataCell(ft.Icon(ft.icons.ARROW_CIRCLE_DOWN, color="red", size=24)),
+                            ft.DataCell(ft.Icon(ft.icons.KEYBOARD_ARROW_DOWN, color="red", size=24)),
                             ft.DataCell(ft.Text(data['player'].upper(), size=12, font_family="Poppins Medium")),
                             ft.DataCell(ft.Text(data['points'], size=12, font_family="Poppins Medium")),
                         ], on_select_changed=lambda e: self.select_player(e.control.cells[2].content.value,
@@ -121,7 +122,7 @@ class DemoApp(ft.UserControl):
                     ft.DataRow(
                         cells=[
                             ft.DataCell(ft.Text(data['rang'], size=12, font_family="Poppins Medium")),
-                            ft.DataCell(ft.Icon(ft.icons.ARROW_CIRCLE_UP, color=ft.colors.GREEN_500, size=24)),
+                            ft.DataCell(ft.Icon(ft.icons.KEYBOARD_ARROW_UP, color=ft.colors.GREEN_500, size=24)),
                             ft.DataCell(ft.Text(data['player'].upper(), size=12, font_family="Poppins Medium")),
                             ft.DataCell(ft.Text(data['points'], size=12, font_family="Poppins Medium")),
                         ], on_select_changed=lambda e: self.select_player(e.control.cells[2].content.value,
@@ -134,7 +135,7 @@ class DemoApp(ft.UserControl):
                     ft.DataRow(
                         cells=[
                             ft.DataCell(ft.Text(data['rang'], size=12, font_family="Poppins Medium")),
-                            ft.DataCell(ft.Icon(ft.icons.ARROW_CIRCLE_DOWN, color="red", size=24)),
+                            ft.DataCell(ft.Icon(ft.icons.KEYBOARD_ARROW_DOWN, color="red", size=24)),
                             ft.DataCell(ft.Text(data['player'].upper(), size=12, font_family="Poppins Medium")),
                             ft.DataCell(ft.Text(data['points'], size=12, font_family="Poppins Medium")),
                         ], on_select_changed=lambda e: self.select_player(e.control.cells[2].content.value,
@@ -170,36 +171,31 @@ class DemoApp(ft.UserControl):
             content=ft.Column(
                 [
                     ft.Container(
-                        bgcolor="teal",
-                        padding=ft.padding.all(10),
+                        padding=ft.padding.only(left=5, right=5, top=5, bottom=5),
                         content=ft.Row(
                             [
                                 ft.Row(
                                     [
-                                        ft.Text("BET", size=30, font_family="Poppins Bold"),
-                                        ft.Text("FUN", size=30, font_family="Poppins Bold", color="white"),
-                                        # ft.Icon(ft.icons.SPORTS_SOCCER_OUTLINED, color="white")
+                                        # ft.Image(src="logos/logo.png", height=50, width=50),
+                                        ft.Text("BETCLUB", size=26, font_family="Poppins Bold")
                                     ], spacing=0
                                 ),
                                 ft.Row(
                                     [
-                                        ft.IconButton(ft.icons.HOME, icon_color="black87"),
-                                        ft.IconButton(ft.icons.BAR_CHART, icon_color="black87")
-                                    ]
+                                        ft.IconButton(ft.icons.PERSON_OUTLINED),
+                                        ft.IconButton(ft.icons.ANALYTICS_OUTLINED),
+                                        ft.IconButton(ft.icons.LOGOUT),
+                                    ], spacing=0
                                 )
                             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                         )
                     ),
                     ft.Divider(height=5),
-                    ft.Row(
-                        [
-                            ft.Text("classement", size=22, font_family="Poppins Bold", color=ft.colors.TEAL_500),
-                            ft.Row([self.list_name, self.list_number, self.all])
-
-                        ], alignment="spaceAround"
-                    ),
+                    ft.Text("CLASSEMENT GENERAL", size=16, font_family="Poppins Bold", color=ft.colors.GREY_600),
+                    ft.Divider(height=5),
+                    ft.Row([self.list_name, self.list_number, self.all], alignment="spaceBetween"),
                     ft.Divider(height=2, color="transparent"),
-                    ft.Row([self.infos], alignment=ft.MainAxisAlignment.START),
+                    self.infos,
                     ft.Divider(height=1),
                     self.container_table
                 ],

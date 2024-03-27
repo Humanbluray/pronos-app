@@ -1,5 +1,8 @@
+import time
+
 import flet as ft
 from vues import view_handler
+import time
 
 
 def main(page: ft.Page):
@@ -10,7 +13,9 @@ def main(page: ft.Page):
         "Poppins Regular": "fonts/Poppins-Regular.ttf",
         "Poppins Bold": "fonts/Poppins-Bold.ttf",
         "Poppins ExtraBold": "fonts/Poppins-ExtraBold.ttf",
-        "Poppins Itlaic": "fonts/Poppins-Italic.ttf"
+        "Poppins Itlaic": "fonts/Poppins-Italic.ttf",
+        "Poppins Light": "fonts/Poppins-Light.ttf",
+        "Poppins SemiBold": "fonts/Poppins-SemiBold.ttf"
     }
 
     def route_change(route):
@@ -20,7 +25,14 @@ def main(page: ft.Page):
         )
 
     page.on_route_change = route_change
-    page.go('/')
+
+    # def launch():
+    #     page.go('/')
+    #     time.sleep(3)
+    #     page.go('/connexion')
+
+    # launch()
+    page.go('/connexion')
 
 
 if __name__ == '__main__':
