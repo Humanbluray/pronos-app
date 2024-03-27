@@ -1,5 +1,3 @@
-import time
-
 import flet as ft
 from vues import view_handler
 import time
@@ -26,13 +24,12 @@ def main(page: ft.Page):
 
     page.on_route_change = route_change
 
-    # def launch():
-    #     page.go('/')
-    #     time.sleep(3)
-    #     page.go('/connexion')
+    def launch():
+        page.go('/')
+        time.sleep(3)
+        page.go('/connexion')
 
-    # launch()
-    page.go('/connexion')
+    launch()
 
 
 if __name__ == '__main__':
